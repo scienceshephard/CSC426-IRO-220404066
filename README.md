@@ -4,6 +4,8 @@
 **Student:** Opeyemi Raphael-Ogbe  
 **Matric number:** 220404066
 
+**Public repository:** [github.com/scienceshephard/CSC426-IRO-220404066](https://github.com/scienceshephard/CSC426-IRO-220404066)
+
 IRO is a coursework prototype for reporting and following community issues involving Adekunle Ajasin University students and residents of Akungba, Iwaro, Etioro, Ayegunle, and nearby communities.
 
 ## Open the prototype
@@ -25,7 +27,7 @@ Open [`app/index.html`](app/index.html) in a browser. The report form works loca
 - [`docs/EMAIL-DRAFT.md`](docs/EMAIL-DRAFT.md) — email text to use after the repository and Google Form are ready.
 - [`tools/build-code-listing.py`](tools/build-code-listing.py) — generates the combined source listing at `docs/CODE-LISTING.txt`.
 
-## Use the Google Form script
+## Create the Google Form
 
 1. Open [script.google.com](https://script.google.com/) while signed into the Google account that should own the form.
 2. Create a project, replace its starter code with `google-forms/CreateIROForm.gs`, then run `createIROSurvey`.
