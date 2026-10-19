@@ -10,6 +10,7 @@
 | Version | 1.0 |
 | Prepared | 19 October 2026 |
 | Product type | Coursework web prototype and proposed system |
+| Live prototype | [GitHub Pages demo](https://scienceshephard.github.io/CSC426-IRO-220404066/app/) |
 
 ## 1. Introduction
 

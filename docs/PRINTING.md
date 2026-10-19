@@ -1,15 +1,11 @@
 # Printing and physical submission
 
-The lecturer's brief asks for the SRS, use-case diagrams, Ishikawa diagram, object listing, and code listing to be printed at **10 pt** after the email is acknowledged.
+The lecturer's brief asks for the SRS, use-case diagrams, Ishikawa diagram, and object listing to be printed at **10 pt** after the email is acknowledged. The lecturer has confirmed that the long source code does not need to be printed; this document gives links to it.
 
-## Suggested print order
+## Print this document
 
-1. [`SRS.md`](SRS.md)
-2. [`USE-CASES.md`](USE-CASES.md), followed by both diagram previews from `../diagrams/`
-3. [`ISHIKAWA-ANALYSIS.md`](ISHIKAWA-ANALYSIS.md), followed by `../diagrams/Ishikawa.svg`
-4. [`OBJECT-LISTING.md`](OBJECT-LISTING.md)
-5. [`CODE-LISTING.txt`](CODE-LISTING.txt)
+Open [`SUBMISSION-PACK.pdf`](SUBMISSION-PACK.pdf) and print it at 100% scale. It is **9 A4 landscape pages** with 10 pt body text; the reporting use-case, administration use-case, and Ishikawa diagrams are embedded in the PDF. The last page links to the live prototype and repository code.
 
-Open [`SUBMISSION-PACK.html`](SUBMISSION-PACK.html) in a browser and print at 100% scale; its print stylesheet sets body and code text to **10 pt** and places the wide fishbone on a landscape page. Regenerate the source listing and print bundle after edits with `python3 tools/build-code-listing.py` and `python3 tools/build-print-bundle.py` from the repository root. The Google Form script and simulated CSV can be added as appendices if required.
+The editable `.drawio` files, detailed Markdown documents, full source listing, Google Form script, and synthetic CSV remain available in the repository. Regenerate the HTML and PDF after edits with `python3 tools/build-print-bundle.py`, then export `docs/SUBMISSION-PACK.html` to PDF.
 
-Keep the email draft unsent until the repository and, if required, the live Google Form have been reviewed and the lecturer has acknowledged receipt. The assignment brief gives a deadline of 10 July 2026; this package is being prepared after that date.
+The brief gives a deadline of 10 July 2026. This package is being prepared after that date.

@@ -2,6 +2,7 @@
   <diagram id="usecase-admin" name="Administration">
     <mxGraphModel dx="980" dy="610" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="610" math="0" shadow="0">
       <root><mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="title" value="USE CASE · ADMINISTRATION" style="text;html=1;strokeColor=none;fillColor=none;fontColor=#153b35;fontStyle=1;fontSize=17;align=left;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="230" y="20" width="500" height="30" as="geometry"/></mxCell>
         <mxCell id="boundary" value="IRO ADMINISTRATION" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9eb4a2;strokeWidth=2;dashed=1;dashPattern=8 5;verticalAlign=top;align=left;spacingLeft=14;spacingTop=10;fontColor=#45644d;fontStyle=1;fontSize=13;" vertex="1" parent="1"><mxGeometry x="230" y="75" width="700" height="440" as="geometry"/></mxCell>
         <mxCell id="admin" value="System Administrator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#153b35;fontColor=#153b35;fontSize=12;" vertex="1" parent="1"><mxGeometry x="65" y="235" width="90" height="120" as="geometry"/></mxCell>
         <mxCell id="coordinator" value="IRO Coordinator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#153b35;fontColor=#153b35;fontSize=12;" vertex="1" parent="1"><mxGeometry x="65" y="400" width="90" height="120" as="geometry"/></mxCell>

@@ -6,6 +6,8 @@
 
 **Public repository:** [github.com/scienceshephard/CSC426-IRO-220404066](https://github.com/scienceshephard/CSC426-IRO-220404066)
 
+**Live prototype:** [scienceshephard.github.io/CSC426-IRO-220404066/app/](https://scienceshephard.github.io/CSC426-IRO-220404066/app/)
+
 IRO is a coursework prototype for reporting and following community issues involving Adekunle Ajasin University students and residents of Akungba, Iwaro, Etioro, Ayegunle, and nearby communities.
 
 ## Open the prototype
@@ -23,7 +25,8 @@ Open [`app/index.html`](app/index.html) in a browser. The report form works loca
 - [`docs/OBJECT-LISTING.md`](docs/OBJECT-LISTING.md) — object listing.
 - [`docs/ISHIKAWA-ANALYSIS.md`](docs/ISHIKAWA-ANALYSIS.md) — problem analysis and sample-data interpretation.
 - [`docs/PRINTING.md`](docs/PRINTING.md) — font-size-10 printing checklist.
-- [`docs/SUBMISSION-PACK.html`](docs/SUBMISSION-PACK.html) — print bundle with 10 pt body text and diagram previews.
+- [`docs/SUBMISSION-PACK.pdf`](docs/SUBMISSION-PACK.pdf) — nine-page, 10 pt print document with all three diagrams embedded.
+- [`docs/SUBMISSION-PACK.html`](docs/SUBMISSION-PACK.html) — self-contained HTML source for the print document.
 - [`docs/EMAIL-DRAFT.md`](docs/EMAIL-DRAFT.md) — email text to use after the repository and Google Form are ready.
 - [`tools/build-code-listing.py`](tools/build-code-listing.py) — generates the combined source listing at `docs/CODE-LISTING.txt`.
 
