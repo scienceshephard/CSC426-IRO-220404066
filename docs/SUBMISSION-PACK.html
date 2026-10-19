@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IRO Coursework Submission Pack</title><style>
+@page{size:A4;margin:16mm} @page wide{size:A4 landscape;margin:14mm}
+*{box-sizing:border-box}body{font:10pt/1.45 Arial,Helvetica,sans-serif;color:#17231f;max-width:100%;margin:0}
+h1{font-size:18pt;line-height:1.15;color:#153b35;margin:0 0 14pt}h2{font-size:14pt;color:#153b35;margin:16pt 0 8pt;break-after:avoid}
+h3{font-size:11pt;color:#153b35;margin:12pt 0 5pt;break-after:avoid}h4{font-size:10pt;color:#153b35;margin:10pt 0 5pt}
+p,li,td,th,blockquote{font-size:10pt}p{margin:5pt 0 8pt}ul,ol{padding-left:20pt;margin:5pt 0 10pt}li{margin:2pt 0}
+table{border-collapse:collapse;width:100%;margin:8pt 0 12pt;break-inside:auto}tr{break-inside:avoid}td,th{border:1px solid #cbd5cc;padding:5pt;text-align:left;vertical-align:top}th{background:#edf4e7}
+blockquote{margin:8pt 0;padding:7pt 11pt;border-left:3px solid #9bb78b;background:#f5f8f2}code,pre{font-family:"Courier New",monospace}pre{white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid #d8dfd8;padding:8pt;line-height:1.3;break-inside:auto}code{font-size:9pt}pre code{font-size:10pt}a{color:#315a3b;text-decoration:none}hr{border:0;border-top:1px solid #ccd5cc;margin:13pt 0}
+.page-break{break-before:page}.diagram-page{page:wide;break-before:page;text-align:center}.diagram-page img{width:100%;height:auto;max-height:175mm;object-fit:contain}.diagram-page h2{text-align:left}
+.cover{padding-top:25mm;min-height:230mm}.cover .meta{border-top:2px solid #153b35;padding-top:12pt;margin-top:24pt}.small-note{font-size:9pt;color:#5f6f65}
+@media screen{body{max-width:860px;margin:30px auto;padding:25px 38px;background:white;box-shadow:0 5px 35px #0002}.diagram-page{margin-top:35px}.page-break{margin-top:40px}}
+</style></head><body>
+<section class="cover"><p class="small-note">CSC426 WEEKLY DEV – WEEKEND 3</p><h1>IRO — Issues Reporting Outlet</h1><p>Software requirements, use cases, problem analysis, object listing, and implementation code.</p><div class="meta"><p><strong>Student:</strong> Opeyemi Raphael-Ogbe</p><p><strong>Matric number:</strong> 220404066</p><p><strong>Project:</strong> Issues reporting for AAUA students and nearby communities</p><p><strong>Version:</strong> 1.0 · 19 October 2026</p></div><p class="small-note">The prototype is local-only. Sample records and the accompanying CSV are fictional and are identified as simulated.</p></section>
+
+<section class="page-break"><p class="small-note">SOFTWARE REQUIREMENTS SPECIFICATION</p><h1>Software Requirements Specification</h1>
+<h2>IRO — Issues Reporting Outlet</h2>
+<table><thead><tr><th>Document item</th><th>Value</th></tr></thead><tbody>
+<tr><td>Course</td><td>CSC426 Weekly Dev – Weekend 3</td></tr>
+<tr><td>Student</td><td>Opeyemi Raphael-Ogbe</td></tr>
+<tr><td>Matric number</td><td>220404066</td></tr>
+<tr><td>Version</td><td>1.0</td></tr>
+<tr><td>Prepared</td><td>19 October 2026</td></tr>
+<tr><td>Product type</td><td>Coursework web prototype and proposed system</td></tr>
+</tbody></table>
+<h2>1. Introduction</h2>
+<h3>1.1 Purpose</h3>
+<p>This SRS specifies IRO, a proposed web-based service for reporting and following non-emergency issues concerning Adekunle Ajasin University students and nearby residents/indigenes, including Akungba, Iwaro, Etioro, and Ayegunle. It describes the actors, data, interfaces, functional requirements, and quality requirements needed for implementation and review.</p>
+<h3>1.2 Scope</h3>
+<p>IRO is intended to give community members one structured route to report an issue, receive a reference, and see safe status information. Coordinators review, categorize, route, and update reports. Public summaries must avoid disclosing the identity of the reporter or sensitive incident details.</p>
+<p>The submitted mini interface is a static browser prototype. It demonstrates form validation, a sample issue board, filters, and browser-local storage. It has no server, account system, notifications, or operational coordinator workflow. All initially displayed reports are fictional. The Google Forms questionnaire is a separate needs-assessment artifact, and the included sample response data is simulated.</p>
+<p>IRO is not an emergency reporting service, police service, medical service, or substitute for existing official contact channels. The prototype must not be used to submit a real or urgent report.</p>
+<h3>1.3 Intended readers</h3>
+<p>The intended readers are the course lecturer, student developer, prospective IRO users, and a future implementation team. This document supports coursework review and future design discussion; it is not an authorization to deploy the service.</p>
+<h3>1.4 Definitions</h3>
+<table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>Reporter</td><td>A student or community member who submits an issue.</td></tr>
+<tr><td>Coordinator</td><td>An authorized person who reviews and routes incoming reports.</td></tr>
+<tr><td>Issue report</td><td>A structured description of a non-emergency concern and its broad area.</td></tr>
+<tr><td>Public update</td><td>A response/status message cleared for display without private reporter data.</td></tr>
+<tr><td>Sensitive data</td><td>Information that identifies a person, reveals private circumstances, or creates safety/privacy risk.</td></tr>
+<tr><td>Synthetic response</td><td>A fictional record used to demonstrate analysis; it is not community evidence.</td></tr>
+</tbody></table>
+<h2>2. Overall description</h2>
+<h3>2.1 Product perspective</h3>
+<p>The proposed service has a public reporter interface and a restricted coordinator interface backed by an authenticated server. A future production version would store reports in a protected database and expose only approved status messages and aggregate statistics. The coursework prototype instead runs fully in one browser and uses <code>localStorage</code> for submitted practice entries.</p>
+<h3>2.2 User classes</h3>
+<table><thead><tr><th>User class</th><th>Goals</th><th>Proposed access</th></tr></thead><tbody>
+<tr><td>AAUA student</td><td>Report campus/shared-area issues and follow a case.</td><td>Public submission and status view.</td></tr>
+<tr><td>Community resident/indigene</td><td>Report local infrastructure, sanitation, utility, transport, or service issues.</td><td>Public submission and status view.</td></tr>
+<tr><td>IRO coordinator</td><td>Assess safety, classify, route, and update reports.</td><td>Authenticated case-management functions.</td></tr>
+<tr><td>System administrator</td><td>Manage coordinator access and approved categories/areas.</td><td>Restricted configuration functions.</td></tr>
+</tbody></table>
+<p>The current prototype implements only a local report-entry form and a display board. It does not authenticate any of the proposed roles.</p>
+<h3>2.3 Operating environment</h3>
+<ul>
+<li>Current prototype: modern desktop or mobile browser with JavaScript and local storage enabled; no server installation required.</li>
+<li>Proposed deployment: HTTPS web application, server-side application/API, protected database, authenticated coordinator accounts, backups, and a documented support/response process.</li>
+<li>The interface should remain usable on common mobile screen sizes and with keyboard navigation.</li>
+</ul>
+<h3>2.4 Constraints and assumptions</h3>
+<ul>
+<li>Reports are non-emergency and within an agreed university/community service scope.</li>
+<li>The responsible university/community offices and coordinator roles must be identified before deployment.</li>
+<li>Collect only information needed to route and resolve an issue.</li>
+<li>The live survey must be reviewed and shared by the student with real participants; simulated records must not be presented as field responses.</li>
+<li>In the prototype, records are local to the browser and can be deleted by clearing its site storage.</li>
+</ul>
+<h2>3. System features and functional requirements</h2>
+<p>Requirements marked <strong>Prototype</strong> are implemented in the static demo. Requirements marked <strong>Proposed</strong> define the operational system and are not implemented in this coursework front end.</p>
+<h3>3.1 Submit an issue report</h3>
+<ul>
+<li><strong>FR-01 — Reporter group (Prototype):</strong> The interface shall allow a reporter to select a group, including AAUA student, Akungba, Iwaro, Etioro, Ayegunle, and other community member.</li>
+<li><strong>FR-02 — Issue details (Prototype):</strong> The interface shall require an issue category, broad area, short title, and description before saving a report.</li>
+<li><strong>FR-03 — Urgency (Prototype):</strong> The interface shall allow the reporter to mark a report Routine, Soon, or Urgent. The interface shall state that it is not monitored and is not suitable for emergencies.</li>
+<li><strong>FR-04 — Privacy reminder (Prototype):</strong> Before saving, the interface shall show a warning against entering names, contact details, exact addresses, medical details, or identifying allegations and require acknowledgment of that warning.</li>
+<li><strong>FR-05 — Anonymous default (Prototype):</strong> The reporter shall be anonymous by default. A contact field shall appear only after the reporter turns anonymity off; contact details are never required.</li>
+<li><strong>FR-06 — Local save (Prototype):</strong> The browser prototype shall save submitted practice entries in the current browser's local storage and show the generated reference. It shall clearly state that the report was not transmitted to any authority.</li>
+<li><strong>FR-07 — Server submission (Proposed):</strong> A deployed system shall transmit a valid report to a server over HTTPS and return a non-identifying reference number.</li>
+<li><strong>FR-08 — Validation (Prototype):</strong> Required fields shall be validated in the browser; title and description shall have length limits.</li>
+</ul>
+<h3>3.2 Review and case management</h3>
+<ul>
+<li><strong>FR-09 — Coordinator authentication (Proposed):</strong> A coordinator shall authenticate before accessing private case details.</li>
+<li><strong>FR-10 — Triage (Proposed):</strong> A coordinator shall review a new report for scope, duplicates, sensitive content, and immediate risk before routing it.</li>
+<li><strong>FR-11 — Categorize and assign (Proposed):</strong> A coordinator shall assign an approved category and responsible unit to a report.</li>
+<li><strong>FR-12 — Status updates (Proposed):</strong> A coordinator shall change the status among Received, Under Review, Assigned, In Progress, Resolved, and Closed, and record a timestamped internal note.</li>
+<li><strong>FR-13 — Public response (Proposed):</strong> A coordinator shall publish an approved, non-identifying update associated with a report reference.</li>
+<li><strong>FR-14 — Duplicate handling (Proposed):</strong> A coordinator shall link duplicate reports while preserving their individual references and protecting reporter details.</li>
+</ul>
+<h3>3.3 Status and summary views</h3>
+<ul>
+<li><strong>FR-15 — Public status view (Prototype):</strong> The prototype shall display sample/local issues and their status, category, broad area, reference, and date without displaying reporter contact details.</li>
+<li><strong>FR-16 — Status filters (Prototype):</strong> The prototype shall let a visitor filter the issue board to all, in-progress, or resolved reports.</li>
+<li><strong>FR-17 — Private status lookup (Proposed):</strong> A deployed system shall let a reporter use a reference plus an appropriate verification method to view their report's approved status without exposing another person's report.</li>
+<li><strong>FR-18 — Aggregate summary (Proposed):</strong> An authorized coordinator shall be able to view counts by category, area, and status. Small groups and sensitive categories shall be suppressed where disclosure could identify a person.</li>
+</ul>
+<h3>3.4 Needs-assessment questionnaire</h3>
+<ul>
+<li><strong>FR-19 — Anonymous survey (Proposed):</strong> The Google Form shall explain its purpose and voluntary nature, avoid collecting email addresses or direct identifiers, and ask about respondent group, broad area, issue types, reporting barriers, and preferred follow-up.</li>
+<li><strong>FR-20 — Survey analysis (Coursework artifact):</strong> The coursework shall distinguish any genuine survey responses from synthetic sample responses and state the denominator used in each percentage.</li>
+</ul>
+<h2>4. External interface requirements</h2>
+<h3>4.1 User interface</h3>
+<p>The public interface shall use plain language, visible labels, keyboard-operable controls, a mobile layout, confirmation/status feedback, and clear privacy/emergency notices. Sensitive internal notes and reporter identity shall not appear on the public board.</p>
+<h3>4.2 Software interfaces</h3>
+<ul>
+<li><strong>Prototype:</strong> HTML, CSS, vanilla JavaScript, and browser <code>localStorage</code>; no external API.</li>
+<li><strong>Proposed production version:</strong> HTTPS API, database, identity provider for staff, notification provider only if approved, and audit logging. Interface formats and vendors remain design decisions.</li>
+<li><strong>Questionnaire:</strong> Google Forms generated by the supplied Apps Script; respondent and editor links are logged by Google Apps Script.</li>
+</ul>
+<h3>4.3 Communications interfaces</h3>
+<p>The production system shall use HTTPS for browser/server traffic. Notifications shall contain the reference and a minimal status message, not sensitive incident details. The prototype sends no network requests for report submission.</p>
+<h2>5. Data requirements</h2>
+<h3>5.1 Core entities</h3>
+<table><thead><tr><th>Entity</th><th>Key attributes</th><th>Notes</th></tr></thead><tbody>
+<tr><td>IssueReport</td><td>reportId, group, category, broadArea, title, description, urgency, status, createdAt, anonymous</td><td>Production identity/contact fields, if needed, must be separate and access-restricted.</td></tr>
+<tr><td>StatusUpdate</td><td>updateId, reportId, status, publicMessage, createdAt, coordinatorId</td><td>Internal notes and public messages must be separate fields with separate permissions.</td></tr>
+<tr><td>Category</td><td>categoryId, label, active</td><td>Controlled by an administrator.</td></tr>
+<tr><td>Coordinator</td><td>coordinatorId, accountId, role, active</td><td>Authentication and account lifecycle are proposed, not in the demo.</td></tr>
+<tr><td>SurveyResponse</td><td>responseId, respondentGroup, broadArea, answers</td><td>Questionnaire response; no direct identifier requested. Aggregate before sharing.</td></tr>
+</tbody></table>
+<h3>5.2 Data minimization and retention</h3>
+<p>The deployed service shall request a broad area rather than an exact address unless the response process proves more precision is necessary. It shall not require a name or contact channel for a general report. Any optional contact detail shall be kept apart from public data and deleted under an approved retention schedule. The SRS cannot set the final retention period until the responsible organization establishes its policy.</p>
+<h2>6. Non-functional requirements</h2>
+<ul>
+<li><strong>NFR-01 — Privacy:</strong> Anonymous reporting shall be the default. Public views and analytics shall exclude direct identifiers and private coordinator notes. Collection shall be limited to operationally necessary fields.</li>
+<li><strong>NFR-02 — Access control:</strong> In production, only authenticated, authorized coordinators may view private case details. Privileged actions shall be recorded in an audit log. The coursework prototype provides no such security boundary and must use fictional/local data only.</li>
+<li><strong>NFR-03 — Transport/storage security:</strong> A deployed service shall use HTTPS, secure server-side storage, protected backups, and credential management appropriate to the hosting environment.</li>
+<li><strong>NFR-04 — Usability:</strong> A first-time user should be able to identify the report action, understand required fields, and receive a save/confirmation message without specialist training.</li>
+<li><strong>NFR-05 — Accessibility:</strong> Interactive elements shall have labels, support keyboard use, expose status messages to assistive technology, preserve readable contrast, and respect reduced-motion preferences.</li>
+<li><strong>NFR-06 — Responsiveness:</strong> The public interface shall adapt from a 360-pixel-wide mobile viewport to desktop without horizontal page scrolling.</li>
+<li><strong>NFR-07 — Performance:</strong> On a normal broadband connection, the deployed public landing page should render its main content within 3 seconds at the 95th percentile; this target requires measurement after hosting.</li>
+<li><strong>NFR-08 — Availability:</strong> A production service should define an availability target and support hours with the responsible organization before launch. The local coursework demo has no uptime guarantee.</li>
+<li><strong>NFR-09 — Maintainability:</strong> Categories, areas, and status labels should be documented and changed through controlled configuration rather than duplicated ad hoc across screens.</li>
+<li><strong>NFR-10 — Integrity:</strong> The production service shall timestamp state changes, prevent unauthorized edits, and preserve a traceable status history.</li>
+<li><strong>NFR-11 — Safe communication:</strong> The UI shall explain that it is not an emergency service and shall identify an approved urgent contact route before production. Until that route is confirmed, no unverified contact number shall be shown.</li>
+<li><strong>NFR-12 — Data handling:</strong> Genuine survey results shall not be mixed with synthetic coursework data. Reports shall be analyzed with clear denominators and caveats.</li>
+</ul>
+<h2>7. Major component interactions</h2>
+<ol>
+<li>The reporter opens the public form, selects a group and broad area, enters a minimal description, and chooses urgency/anonymity.</li>
+<li>The public interface validates required fields and shows the privacy and non-emergency notice.</li>
+<li>In the coursework prototype, JavaScript writes a practice record to this browser's local storage, renders a reference, and updates the local board.</li>
+<li>In a proposed production deployment, the public interface would send the report to an HTTPS API. The server would validate it, store it, and issue a reference.</li>
+<li>An authenticated coordinator would inspect the new case, check scope/duplicates/safety, assign category and responsible unit, and create a status update.</li>
+<li>The public status view would reveal only the approved status and non-identifying response. A coordinator dashboard would show protected detail and aggregate counts according to role.</li>
+<li>The Google Forms questionnaire independently gathers voluntary needs-assessment feedback. Only genuine answers may be described as community survey results.</li>
+</ol>
+<h2>8. Use-case references</h2>
+<p>The use-case diagram source files are <a href="../diagrams/UseCase-Reporting.drawio"><code>../diagrams/UseCase-Reporting.drawio</code></a> and <a href="../diagrams/UseCase-Administration.drawio"><code>../diagrams/UseCase-Administration.drawio</code></a>. The narrative and preconditions are in <a href="USE-CASES.md"><code>USE-CASES.md</code></a>.</p>
+<h2>9. Acceptance criteria</h2>
+<p>The coursework prototype is acceptable when a reviewer can open the static page; select a reporter group, category, broad area, title, description, and urgency; acknowledge the privacy notice; save a report locally; see a confirmation/reference; find the entry on the board; filter the board; and distinguish synthetic sample cards from practice entries. The associated SRS, survey package, Ishikawa diagram, use-case diagrams, object listing, and source listing shall be present in the repository.</p>
+<p>Production acceptance additionally requires approved ownership/routing, privacy and retention rules, authentication and access controls, secure server-side storage, tested backup/recovery, accessibility review, and a staffed response procedure. Those requirements are outside this mini prototype.</p>
+<h2>10. Limitations and future work</h2>
+<p>The demo is single-browser and client-only; its local storage is not a secure case-management database. It does not provide authentication, actual delivery, assignment, moderation, attachments, status subscriptions, email/SMS alerts, audit records, or an operational SLA. Next steps are to collect and analyze real consented feedback, confirm responsible offices and emergency alternatives, obtain privacy/security review, implement a backend and role-based coordinator workflow, and test accessibility and usability with representatives of both user groups.</p>
+<h2>11. References</h2>
+<ul>
+<li>CSC426 Weekly Dev – Weekend 3 assignment brief supplied for this coursework (01/07/26).</li>
+<li>Google Apps Script Forms Service reference: <a href="https://developers.google.com/apps-script/reference/forms">Google for Developers</a>.</li>
+<li>Project artifacts: <a href="../google-forms/QUESTIONNAIRE.md"><code>../google-forms/QUESTIONNAIRE.md</code></a>, <a href="ISHIKAWA-ANALYSIS.md"><code>ISHIKAWA-ANALYSIS.md</code></a>, and <a href="USE-CASES.md"><code>USE-CASES.md</code></a>.</li>
+</ul></section>
+<section class="page-break"><p class="small-note">USE CASES</p><h1>IRO use cases</h1>
+<h2>Actors</h2>
+<table><thead><tr><th>Actor</th><th>Description</th></tr></thead><tbody>
+<tr><td>Reporter</td><td>AAUA student or community resident/indigene submitting or following an issue.</td></tr>
+<tr><td>Coordinator</td><td>Authorized staff/community representative triaging cases and publishing safe updates.</td></tr>
+<tr><td>System administrator</td><td>Person configuring categories, areas, and coordinator access.</td></tr>
+</tbody></table>
+<p>The reporter and coordinator interactions are shown in <code>UseCase-Reporting</code>; privileged configuration is shown in <code>UseCase-Administration</code>. The <code>.drawio</code> files are editable in diagrams.net (draw.io); SVGs are previews.</p>
+<h2>UC-01 — Submit an issue</h2>
+<p><strong>Primary actor:</strong> Reporter. <strong>Goal:</strong> Record a non-emergency issue with enough detail for routing.</p>
+<p><strong>Preconditions:</strong> Reporter can open the public page and understands it is not an emergency channel. <strong>Trigger:</strong> Reporter selects “Report an issue.”</p>
+<p><strong>Main flow:</strong></p>
+<ol>
+<li>IRO displays the privacy and scope notice.</li>
+<li>Reporter selects their broad group, issue category, and community/campus area.</li>
+<li>Reporter provides a short title, description, and urgency.</li>
+<li>IRO validates required fields and confirms the privacy acknowledgment.</li>
+<li>Reporter leaves anonymity enabled (default) or optionally provides contact information in a production system.</li>
+<li>IRO stores the report and returns a reference number.</li>
+<li>IRO displays the next safe status/action.</li>
+</ol>
+<p><strong>Alternative/exception flows:</strong> Missing fields are highlighted; an invalid entry is not saved. If the report concerns imminent danger, IRO tells the reporter not to rely on this non-emergency service and to use a verified official emergency channel. If a report includes identifying/sensitive details, a production coordinator may restrict it and request a safe redaction; the prototype only displays a warning.</p>
+<p><strong>Prototype note:</strong> Steps 2–6 work in the browser, but “store” means <code>localStorage</code> in that browser. The report is not transmitted to anyone.</p>
+<h2>UC-02 — Review and route a report</h2>
+<p><strong>Primary actor:</strong> Coordinator.</p>
+<p><strong>Preconditions:</strong> Coordinator is authenticated and has permission for the case queue. A new report exists.</p>
+<p><strong>Main flow:</strong> Coordinator reviews the description and broad area, checks scope and duplicate reports, identifies sensitive content or risk, selects an approved category, assigns the responsible unit, records an internal note, and moves the report to Under Review or Assigned. Private notes remain restricted.</p>
+<p><strong>Exceptions:</strong> Out-of-scope reports are closed with an approved explanation; urgent safety concerns follow an approved escalation procedure; a duplicate is linked to an existing case without removing its own reference.</p>
+<h2>UC-03 — Publish a status update</h2>
+<p><strong>Primary actor:</strong> Coordinator. <strong>Supporting actor:</strong> Reporter/public visitor.</p>
+<p><strong>Preconditions:</strong> A report exists and the coordinator has reviewed the proposed update.</p>
+<p><strong>Main flow:</strong> Coordinator selects a status, writes a factual public update without names or sensitive details, previews the public display, and publishes. IRO records the author and timestamp. A reporter looks up their reference to read the approved status.</p>
+<h2>UC-04 — View aggregate issue summary</h2>
+<p><strong>Primary actor:</strong> Coordinator.</p>
+<p><strong>Preconditions:</strong> Coordinator is authenticated with summary access; reports exist.</p>
+<p><strong>Main flow:</strong> Coordinator selects a time range, area, category, or status. IRO returns aggregate counts and suppresses small or sensitive groups where a person could be identified. It does not display private narratives or contact fields in the summary.</p>
+<h2>UC-05 — Configure categories and access</h2>
+<p><strong>Primary actor:</strong> System administrator.</p>
+<p><strong>Preconditions:</strong> Administrator has authenticated with a privileged account.</p>
+<p><strong>Main flow:</strong> Administrator updates an approved category/area list or coordinator role, confirms the change, and IRO records an audit event. Access is removed promptly when a coordinator leaves the role.</p>
+<h2>UC-06 — Provide needs-assessment feedback</h2>
+<p><strong>Primary actor:</strong> Student/community survey participant.</p>
+<p><strong>Preconditions:</strong> Participant has opened the separate anonymous Google Form and read its consent statement.</p>
+<p><strong>Main flow:</strong> Participant chooses whether to consent; if consenting, answers questions about group, broad area, issue types, reporting barriers, privacy concerns, and desired follow-up; optionally gives a non-identifying suggestion; submits the form. The student analyzes only consented genuine responses as community feedback.</p>
+<p><strong>Coursework data note:</strong> <code>data/synthetic-responses.csv</code> is fictional practice data, not responses from this use case.</p></section>
+<section class="diagram-page"><h2>Use-case diagram — reporting and case management</h2><img src="../diagrams/UseCase-Reporting.svg" alt="IRO reporting and case management use-case diagram"></section>
+<section class="diagram-page"><h2>Use-case diagram — administration</h2><img src="../diagrams/UseCase-Administration.svg" alt="IRO administration use-case diagram"></section>
+<section class="page-break"><p class="small-note">ISHIKAWA ANALYSIS</p><h1>Ishikawa problem analysis</h1>
+<h2>Effect to investigate</h2>
+<p><strong>Students and local residents cannot reliably report and follow up on shared campus/community issues through one trusted, safe route.</strong> The proposed effect is a problem statement for analysis; it is not a measured finding from a completed community survey.</p>
+<p>The editable fishbone diagram is <a href="../diagrams/Ishikawa.drawio"><code>../diagrams/Ishikawa.drawio</code></a>; <a href="../diagrams/Ishikawa.svg"><code>../diagrams/Ishikawa.svg</code></a> is its preview.</p>
+<h2>Cause branches</h2>
+<table><thead><tr><th>Branch</th><th>Possible contributing causes</th></tr></thead><tbody>
+<tr><td>People</td><td>Residents/students may not know which office owns an issue; reporters may fear blame or retaliation; responsibilities between campus and community actors may be unclear.</td></tr>
+<tr><td>Process</td><td>Reports arrive through unrelated calls, chats, and in-person conversations; there may be no standard minimum information; case references, routing, and close-out steps may be inconsistent.</td></tr>
+<tr><td>Technology</td><td>People may have limited data/device access; digital channels may be inaccessible; separate channels may not share a queue or status history.</td></tr>
+<tr><td>Governance and trust</td><td>Privacy expectations and retention rules may be unknown; no defined owner may be accountable for an update; the boundary between public facts and private details may be unclear.</td></tr>
+<tr><td>Communication</td><td>Feedback may not reach the reporter; notices may be scattered across groups; a reporter may not know whether the issue was received, assigned, or resolved.</td></tr>
+<tr><td>Resources and environment</td><td>Staff/funds to respond may be limited; transport, weather, or infrastructure conditions can complicate investigation; issue volume may exceed the capacity of the responsible team.</td></tr>
+</tbody></table>
+<h2>Coursework data analysis (simulated)</h2>
+<p>The included file contains <strong>15 fictional rows</strong> created to demonstrate analysis. No community survey was sent or answered in creating these rows. Respondent mix: 9 students (60%), 3 Akungba residents (20%), and 1 each from Iwaro, Etioro, and Ayegunle (6.7% each). The small sample is illustrative only and is not representative.</p>
+<p>Issue types were multi-select; each percentage below uses <strong>15 simulated respondents</strong> as the denominator, so totals can exceed 100%:</p>
+<table><thead><tr><th>Simulated issue type</th><th>Count</th><th>Percent</th></tr></thead><tbody>
+<tr><td>Sanitation</td><td>10</td><td>66.7%</td></tr>
+<tr><td>Roads</td><td>8</td><td>53.3%</td></tr>
+<tr><td>Safety</td><td>7</td><td>46.7%</td></tr>
+<tr><td>Utilities</td><td>6</td><td>40.0%</td></tr>
+<tr><td>Facilities</td><td>5</td><td>33.3%</td></tr>
+<tr><td>Communication</td><td>4</td><td>26.7%</td></tr>
+<tr><td>Transport</td><td>4</td><td>26.7%</td></tr>
+</tbody></table>
+<p>Reporting barriers were also multi-select (denominator 15):</p>
+<table><thead><tr><th>Simulated barrier</th><th>Count</th><th>Percent</th></tr></thead><tbody>
+<tr><td>Do not know the right contact</td><td>8</td><td>53.3%</td></tr>
+<tr><td>Expect no follow-up</td><td>6</td><td>40.0%</td></tr>
+<tr><td>Privacy concern</td><td>6</td><td>40.0%</td></tr>
+<tr><td>Process takes time</td><td>4</td><td>26.7%</td></tr>
+<tr><td>Retaliation concern</td><td>2</td><td>13.3%</td></tr>
+<tr><td>Unreliable internet</td><td>1</td><td>6.7%</td></tr>
+</tbody></table>
+<p>Six fictional respondents selected weekly issue frequency, six selected monthly, and three selected rarely. These are properties of the simulated CSV only, not evidence about the community.</p>
+<h2>Design implications</h2>
+<p>The prototype uses broad area choices, anonymous-by-default reporting, a privacy reminder, a non-emergency notice, required structured fields, a local reference, and a status board that omits contact details. A production version would also need authenticated coordinator access, a reviewed privacy/retention policy, a documented routing owner, and an agreed update target. A genuine needs assessment with consent and broader participation is required before treating these priorities as community findings.</p></section>
+<section class="diagram-page"><h2>Ishikawa fishbone diagram</h2><img src="../diagrams/Ishikawa.svg" alt="IRO Ishikawa fishbone problem analysis"></section>
+<section class="page-break"><p class="small-note">OBJECT LISTING</p><h1>IRO object listing</h1>
+<p>This list distinguishes objects implemented in the static prototype from objects required by a future multi-user system.</p>
+<table><thead><tr><th>Object</th><th>Type</th><th>Main attributes/responsibility</th><th>State / relationships</th></tr></thead><tbody>
+<tr><td><code>IROPage</code></td><td>Browser page</td><td>Renders the landing page, privacy notice, report form, and issue board.</td><td>Contains form and board sections.</td></tr>
+<tr><td><code>IssueReport</code></td><td>Data object</td><td><code>id</code>, <code>category</code>, <code>area</code>, <code>title</code>, <code>description</code>, <code>status</code>, <code>date</code>, <code>urgency</code>, <code>reporterGroup</code>, <code>anonymous</code>, <code>sample</code>.</td><td>Created by form or supplied as fictional sample data.</td></tr>
+<tr><td><code>ReportForm</code></td><td>UI component</td><td>Captures group, category, area, title, description, urgency, anonymity, and consent.</td><td>Validates and creates an <code>IssueReport</code>.</td></tr>
+<tr><td><code>LocalReportStore</code></td><td>Browser storage adapter</td><td>Reads/writes practice reports under key <code>iro-demo-reports-v1</code>.</td><td>Uses browser <code>localStorage</code>; one browser only, not protected server storage.</td></tr>
+<tr><td><code>IssueBoard</code></td><td>UI component</td><td>Renders safe report fields and counts; filters all, in-progress, and resolved entries.</td><td>Reads <code>IssueReport</code> objects; does not expose reporter contact details.</td></tr>
+<tr><td><code>StatusLabel</code></td><td>UI value</td><td>Displays Received, In progress, or Resolved on prototype cards.</td><td>In production, status history belongs to <code>StatusUpdate</code>.</td></tr>
+<tr><td><code>SurveyResponse</code></td><td>Coursework data record</td><td>Synthetic CSV row with pseudonymous sample ID, respondent group, broad area, multi-select issue types/barriers, frequency, and expected update.</td><td>All rows carry <code>Simulated</code>; never evidence of actual participants.</td></tr>
+<tr><td><code>Coordinator</code></td><td>Proposed domain object</td><td>Authorized user who reviews, classifies, assigns, and updates a case.</td><td>Requires authenticated account/role; absent in prototype.</td></tr>
+<tr><td><code>StatusUpdate</code></td><td>Proposed domain object</td><td><code>updateId</code>, report reference, status, public message, timestamp, coordinator reference.</td><td>Linked to <code>IssueReport</code>; public and internal text must have separate access rules.</td></tr>
+<tr><td><code>Category</code></td><td>Proposed domain object</td><td>Approved category ID, label, active flag.</td><td>Managed by an administrator and referenced by a report.</td></tr>
+<tr><td><code>IRO API</code></td><td>Proposed service</td><td>Validates server-side requests, stores reports, returns references, and enforces permissions.</td><td>Not present in the static prototype.</td></tr>
+<tr><td><code>ReportDatabase</code></td><td>Proposed persistence object</td><td>Stores report and status records under a retention and access policy.</td><td>Not present in the static prototype.</td></tr>
+</tbody></table>
+<h2>Implemented prototype behavior</h2>
+<p><code>app/app.js</code> defines the fictional sample report array and creates report records from <code>FormData</code>. It reads/writes the local store, escapes text before rendering report cards, computes counts, and filters by status. It deliberately does not send report data over the network.</p></section>
+<section class="page-break"><p class="small-note">CODE LISTING</p><h1>Project source code</h1><pre><code>IRO — ISSUES REPORTING OUTLET
+Student: Opeyemi Raphael-Ogbe | Matric number: 220404066
+Combined source listing. Generated from the project files.
+
+========================================================================================
+FILE: app/index.html
+========================================================================================
+&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;meta name=&quot;theme-color&quot; content=&quot;#153b35&quot;&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;IRO is a coursework prototype for reporting local student and community issues around AAUA.&quot;&gt;
+  &lt;title&gt;IRO — Issues Reporting Outlet&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;
+  &lt;script src=&quot;app.js&quot; defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a class=&quot;skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
+  &lt;header class=&quot;site-header&quot;&gt;
+    &lt;a class=&quot;brand&quot; href=&quot;#top&quot; aria-label=&quot;IRO home&quot;&gt;
+      &lt;span class=&quot;brand-mark&quot; aria-hidden=&quot;true&quot;&gt;i&lt;/span&gt;
+      &lt;span&gt;&lt;strong&gt;iro&lt;/strong&gt;&lt;small&gt;Issues Reporting Outlet&lt;/small&gt;&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;nav class=&quot;primary-nav&quot; aria-label=&quot;Main navigation&quot;&gt;
+      &lt;a href=&quot;#how-it-works&quot;&gt;How it works&lt;/a&gt;
+      &lt;a href=&quot;#reports&quot;&gt;Community issues&lt;/a&gt;
+      &lt;a class=&quot;nav-cta&quot; href=&quot;#report&quot;&gt;Report an issue &lt;span aria-hidden=&quot;true&quot;&gt;↗&lt;/span&gt;&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main id=&quot;main&quot;&gt;
+    &lt;section class=&quot;hero&quot; id=&quot;top&quot; aria-labelledby=&quot;hero-title&quot;&gt;
+      &lt;div class=&quot;hero-copy&quot;&gt;
+        &lt;p class=&quot;eyebrow&quot;&gt;&lt;span class=&quot;live-dot&quot;&gt;&lt;/span&gt; AAUA · Akungba-Akoko · nearby communities&lt;/p&gt;
+        &lt;h1 id=&quot;hero-title&quot;&gt;A better route from &lt;em&gt;issue&lt;/em&gt; to action.&lt;/h1&gt;
+        &lt;p class=&quot;hero-intro&quot;&gt;A simple place for students and residents to raise local concerns, see what has been reported, and understand what happens next.&lt;/p&gt;
+        &lt;a class=&quot;button button-light&quot; href=&quot;#report&quot;&gt;Share an issue &lt;span aria-hidden=&quot;true&quot;&gt;↓&lt;/span&gt;&lt;/a&gt;
+        &lt;div class=&quot;hero-note&quot;&gt;&lt;span class=&quot;note-icon&quot; aria-hidden=&quot;true&quot;&gt;✳&lt;/span&gt;&lt;span&gt;Use this demo for coursework only. It does not contact an authority or provide emergency help.&lt;/span&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;hero-art&quot; aria-hidden=&quot;true&quot;&gt;
+        &lt;div class=&quot;orbit orbit-one&quot;&gt;&lt;/div&gt;&lt;div class=&quot;orbit orbit-two&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;art-card card-main&quot;&gt;&lt;span class=&quot;art-symbol&quot;&gt;↗&lt;/span&gt;&lt;span class=&quot;art-label&quot;&gt;A concern, heard.&lt;/span&gt;&lt;strong&gt;A clear next step.&lt;/strong&gt;&lt;/div&gt;
+        &lt;div class=&quot;art-card card-small&quot;&gt;&lt;span class=&quot;status-dot&quot;&gt;&lt;/span&gt;&lt;span&gt;Update received&lt;/span&gt;&lt;b&gt;Case #IRO-024&lt;/b&gt;&lt;/div&gt;
+        &lt;div class=&quot;art-spark&quot;&gt;✳&lt;/div&gt;&lt;div class=&quot;art-line&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;hero-bottom&quot;&gt;&lt;span&gt;BUILT FOR THE PEOPLE WHO SHARE THIS PLACE&lt;/span&gt;&lt;span&gt;STUDENTS &lt;i&gt;·&lt;/i&gt; RESIDENTS &lt;i&gt;·&lt;/i&gt; COMMUNITY TEAMS&lt;/span&gt;&lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;trust-strip&quot; aria-label=&quot;Prototype privacy notes&quot;&gt;
+      &lt;div&gt;&lt;span class=&quot;strip-icon&quot;&gt;◎&lt;/span&gt;&lt;span&gt;&lt;strong&gt;Local-only prototype&lt;/strong&gt;&lt;small&gt;Entries are not sent to a server.&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;strip-icon&quot;&gt;↗&lt;/span&gt;&lt;span&gt;&lt;strong&gt;Follow the progress&lt;/strong&gt;&lt;small&gt;See example reports and statuses.&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;strip-icon&quot;&gt;⌁&lt;/span&gt;&lt;span&gt;&lt;strong&gt;Made for everyone here&lt;/strong&gt;&lt;small&gt;Students and local indigenes.&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;span class=&quot;demo-pill&quot;&gt;COURSEWORK PROTOTYPE&lt;/span&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;work-area&quot; id=&quot;how-it-works&quot;&gt;
+      &lt;div class=&quot;section-heading&quot;&gt;
+        &lt;div&gt;&lt;p class=&quot;eyebrow eyebrow-dark&quot;&gt;A small step can start a response&lt;/p&gt;&lt;h2&gt;Make the issue easier to act on.&lt;/h2&gt;&lt;/div&gt;
+        &lt;p&gt;IRO organizes a report with enough context to route it, while reminding people not to post sensitive personal information.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;steps-grid&quot;&gt;
+        &lt;article class=&quot;step-card&quot;&gt;&lt;span class=&quot;step-number&quot;&gt;01&lt;/span&gt;&lt;div class=&quot;step-icon icon-report&quot;&gt;✎&lt;/div&gt;&lt;h3&gt;Describe the issue&lt;/h3&gt;&lt;p&gt;Choose a category and give a short, practical description of what needs attention.&lt;/p&gt;&lt;/article&gt;
+        &lt;article class=&quot;step-card&quot;&gt;&lt;span class=&quot;step-number&quot;&gt;02&lt;/span&gt;&lt;div class=&quot;step-icon icon-route&quot;&gt;⌖&lt;/div&gt;&lt;h3&gt;Share useful context&lt;/h3&gt;&lt;p&gt;Select a broad area and urgency. Keep names, exact addresses, and private details out.&lt;/p&gt;&lt;/article&gt;
+        &lt;article class=&quot;step-card&quot;&gt;&lt;span class=&quot;step-number&quot;&gt;03&lt;/span&gt;&lt;div class=&quot;step-icon icon-update&quot;&gt;↗&lt;/div&gt;&lt;h3&gt;Follow the status&lt;/h3&gt;&lt;p&gt;In a full system, a coordinator would review reports and publish safe progress updates.&lt;/p&gt;&lt;/article&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;report-section&quot; id=&quot;report&quot;&gt;
+      &lt;div class=&quot;report-intro&quot;&gt;
+        &lt;p class=&quot;eyebrow eyebrow-dark&quot;&gt;YOUR VOICE BELONGS HERE&lt;/p&gt;
+        &lt;h2&gt;What needs attention?&lt;/h2&gt;
+        &lt;p&gt;Share a clear, non-sensitive description. In this prototype, the entry is saved only in this browser.&lt;/p&gt;
+        &lt;div class=&quot;privacy-card&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;⌑&lt;/span&gt;&lt;div&gt;&lt;strong&gt;Protect yourself and others&lt;/strong&gt;&lt;p&gt;Don&#x27;t include names, phone numbers, exact home addresses, medical details, or allegations that identify a person. This demo is not monitored.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;scope-list&quot;&gt;&lt;span&gt;AAUA Students&lt;/span&gt;&lt;span&gt;Akungba&lt;/span&gt;&lt;span&gt;Iwaro&lt;/span&gt;&lt;span&gt;Etioro&lt;/span&gt;&lt;span&gt;Ayegunle&lt;/span&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;form class=&quot;report-form&quot; id=&quot;issueForm&quot;&gt;
+        &lt;div class=&quot;form-head&quot;&gt;&lt;div&gt;&lt;span class=&quot;form-step&quot;&gt;NEW REPORT &lt;span&gt;·&lt;/span&gt; 01&lt;/span&gt;&lt;h3&gt;Tell us what is happening&lt;/h3&gt;&lt;/div&gt;&lt;span class=&quot;lock-mark&quot; aria-label=&quot;Local demo&quot;&gt;⌑&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;field-row&quot;&gt;
+          &lt;label class=&quot;field&quot;&gt;I am a
+            &lt;select name=&quot;reporterGroup&quot; required&gt;
+              &lt;option value=&quot;&quot;&gt;Choose one&lt;/option&gt;&lt;option&gt;AAUA student&lt;/option&gt;&lt;option&gt;Akungba indigene&lt;/option&gt;&lt;option&gt;Iwaro indigene&lt;/option&gt;&lt;option&gt;Etioro indigene&lt;/option&gt;&lt;option&gt;Ayegunle indigene&lt;/option&gt;&lt;option&gt;Other community member&lt;/option&gt;
+            &lt;/select&gt;
+          &lt;/label&gt;
+          &lt;label class=&quot;field&quot;&gt;Issue category
+            &lt;select name=&quot;category&quot; required&gt;
+              &lt;option value=&quot;&quot;&gt;Choose one&lt;/option&gt;&lt;option&gt;Roads &amp;amp; transport&lt;/option&gt;&lt;option&gt;Water &amp;amp; electricity&lt;/option&gt;&lt;option&gt;Sanitation &amp;amp; waste&lt;/option&gt;&lt;option&gt;Safety &amp;amp; security&lt;/option&gt;&lt;option&gt;Facilities &amp;amp; maintenance&lt;/option&gt;&lt;option&gt;Student services&lt;/option&gt;&lt;option&gt;Community concern&lt;/option&gt;&lt;option&gt;Other&lt;/option&gt;
+            &lt;/select&gt;
+          &lt;/label&gt;
+        &lt;/div&gt;
+        &lt;label class=&quot;field&quot;&gt;Where is it happening?
+          &lt;select name=&quot;area&quot; required&gt;
+            &lt;option value=&quot;&quot;&gt;Choose a broad area&lt;/option&gt;&lt;option&gt;AAUA campus&lt;/option&gt;&lt;option&gt;Akungba-Akoko&lt;/option&gt;&lt;option&gt;Iwaro&lt;/option&gt;&lt;option&gt;Etioro&lt;/option&gt;&lt;option&gt;Ayegunle&lt;/option&gt;&lt;option&gt;Other nearby area&lt;/option&gt;
+          &lt;/select&gt;
+          &lt;span class=&quot;field-hint&quot;&gt;Please don&#x27;t enter an exact home address.&lt;/span&gt;
+        &lt;/label&gt;
+        &lt;label class=&quot;field&quot;&gt;Short title
+          &lt;input name=&quot;title&quot; maxlength=&quot;70&quot; placeholder=&quot;e.g. Waste collection delay near campus&quot; required&gt;
+        &lt;/label&gt;
+        &lt;label class=&quot;field&quot;&gt;Description
+          &lt;textarea name=&quot;description&quot; rows=&quot;4&quot; maxlength=&quot;500&quot; placeholder=&quot;What is happening, and what would help? Avoid identifying details.&quot; required&gt;&lt;/textarea&gt;
+          &lt;span class=&quot;field-hint&quot;&gt;Up to 500 characters. Keep it factual and respectful.&lt;/span&gt;
+        &lt;/label&gt;
+        &lt;fieldset class=&quot;urgency-field&quot;&gt;&lt;legend&gt;How urgent is it?&lt;/legend&gt;
+          &lt;div class=&quot;urgency-options&quot;&gt;
+            &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;urgency&quot; value=&quot;Routine&quot; checked&gt;&lt;span&gt;&lt;b&gt;Routine&lt;/b&gt;&lt;small&gt;Needs attention&lt;/small&gt;&lt;/span&gt;&lt;/label&gt;
+            &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;urgency&quot; value=&quot;Soon&quot;&gt;&lt;span&gt;&lt;b&gt;Soon&lt;/b&gt;&lt;small&gt;May worsen&lt;/small&gt;&lt;/span&gt;&lt;/label&gt;
+            &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;urgency&quot; value=&quot;Urgent&quot;&gt;&lt;span&gt;&lt;b&gt;Urgent&lt;/b&gt;&lt;small&gt;Prompt action&lt;/small&gt;&lt;/span&gt;&lt;/label&gt;
+          &lt;/div&gt;
+        &lt;/fieldset&gt;
+        &lt;label class=&quot;check-row&quot;&gt;&lt;input id=&quot;anonymous&quot; type=&quot;checkbox&quot; checked&gt;&lt;span&gt;&lt;strong&gt;Keep this report anonymous&lt;/strong&gt;&lt;small&gt;No contact detail is included with a local demo report.&lt;/small&gt;&lt;/span&gt;&lt;/label&gt;
+        &lt;label class=&quot;field contact-field&quot; id=&quot;contactWrap&quot; hidden&gt;Optional contact for follow-up
+          &lt;input name=&quot;contact&quot; type=&quot;text&quot; maxlength=&quot;80&quot; autocomplete=&quot;off&quot; placeholder=&quot;Only if you choose to share it&quot;&gt;
+          &lt;span class=&quot;field-hint&quot;&gt;The prototype ignores this field. Do not enter real contact details.&lt;/span&gt;
+        &lt;/label&gt;
+        &lt;label class=&quot;check-row consent-row&quot;&gt;&lt;input name=&quot;consent&quot; type=&quot;checkbox&quot; required&gt;&lt;span&gt;&lt;strong&gt;I have left out private identifying information.&lt;/strong&gt;&lt;small&gt;This is a coursework demo and no response team is monitoring it.&lt;/small&gt;&lt;/span&gt;&lt;/label&gt;
+        &lt;button class=&quot;button button-dark submit-button&quot; type=&quot;submit&quot;&gt;Save report in this browser &lt;span aria-hidden=&quot;true&quot;&gt;↗&lt;/span&gt;&lt;/button&gt;
+        &lt;p class=&quot;form-feedback&quot; id=&quot;formFeedback&quot; role=&quot;status&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
+      &lt;/form&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;issues-section&quot; id=&quot;reports&quot;&gt;
+      &lt;div class=&quot;issues-heading&quot;&gt;
+        &lt;div&gt;&lt;p class=&quot;eyebrow eyebrow-dark&quot;&gt;A community view&lt;/p&gt;&lt;h2&gt;Issues, in the open.&lt;/h2&gt;&lt;p&gt;These fictional examples show how a full service might communicate progress without exposing reporters.&lt;/p&gt;&lt;/div&gt;
+        &lt;div class=&quot;issue-filters&quot; role=&quot;group&quot; aria-label=&quot;Filter example issues&quot;&gt;
+          &lt;button class=&quot;filter-button active&quot; data-filter=&quot;all&quot; type=&quot;button&quot;&gt;All &lt;span id=&quot;countAll&quot;&gt;0&lt;/span&gt;&lt;/button&gt;
+          &lt;button class=&quot;filter-button&quot; data-filter=&quot;open&quot; type=&quot;button&quot;&gt;In progress &lt;span id=&quot;countOpen&quot;&gt;0&lt;/span&gt;&lt;/button&gt;
+          &lt;button class=&quot;filter-button&quot; data-filter=&quot;resolved&quot; type=&quot;button&quot;&gt;Resolved &lt;span id=&quot;countResolved&quot;&gt;0&lt;/span&gt;&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;demo-alert&quot;&gt;&lt;span&gt;i&lt;/span&gt;&lt;p&gt;&lt;strong&gt;Sample board.&lt;/strong&gt; Initial cards are invented examples; reports submitted in this browser are local practice entries only.&lt;/p&gt;&lt;/div&gt;
+      &lt;div class=&quot;issue-list&quot; id=&quot;issueList&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;closing-cta&quot;&gt;
+      &lt;div&gt;&lt;p class=&quot;eyebrow&quot;&gt;BETTER INFORMATION. BETTER FOLLOW-UP.&lt;/p&gt;&lt;h2&gt;Start with one clear report.&lt;/h2&gt;&lt;/div&gt;
+      &lt;a class=&quot;button button-light&quot; href=&quot;#report&quot;&gt;Report an issue &lt;span aria-hidden=&quot;true&quot;&gt;↗&lt;/span&gt;&lt;/a&gt;
+      &lt;span class=&quot;closing-mark&quot; aria-hidden=&quot;true&quot;&gt;i&lt;/span&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer class=&quot;site-footer&quot;&gt;&lt;a class=&quot;brand footer-brand&quot; href=&quot;#top&quot;&gt;&lt;span class=&quot;brand-mark&quot; aria-hidden=&quot;true&quot;&gt;i&lt;/span&gt;&lt;span&gt;&lt;strong&gt;iro&lt;/strong&gt;&lt;small&gt;Issues Reporting Outlet&lt;/small&gt;&lt;/span&gt;&lt;/a&gt;&lt;p&gt;CSC426 · Coursework prototype · Opeyemi Raphael-Ogbe · 220404066&lt;/p&gt;&lt;a href=&quot;../README.md&quot;&gt;Project documentation &lt;span aria-hidden=&quot;true&quot;&gt;↗&lt;/span&gt;&lt;/a&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+========================================================================================
+FILE: app/styles.css
+========================================================================================
+@import url(&#x27;https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap&#x27;);
+
+:root{--pine:#153b35;--pine-dark:#0d2b27;--ink:#17231f;--muted:#68736f;--paper:#f6f7f2;--white:#fff;--lime:#d8ef9d;--line:#e4e8df;--mint:#e7f0e9;--orange:#e99a5b;--shadow:0 20px 60px rgba(18,49,41,.09);font-family:&#x27;DM Sans&#x27;,sans-serif;color:var(--ink);scroll-behavior:smooth}
+*{box-sizing:border-box}body{margin:0;background:var(--paper)}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}button,a,input,select,textarea{outline-color:#a5cf66}button{cursor:pointer}.skip-link{position:absolute;left:12px;top:-50px;background:#fff;padding:12px;z-index:8}.skip-link:focus{top:12px}.site-header{height:88px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(calc((100% - 1200px)/2),5.5%);position:relative;z-index:2}.brand{display:flex;gap:11px;align-items:center}.brand-mark{width:36px;height:36px;border-radius:12px;background:var(--pine);color:var(--lime);font:800 24px Manrope,sans-serif;display:grid;place-items:center}.brand strong{display:block;font:800 23px Manrope,sans-serif;letter-spacing:-1.8px;line-height:1}.brand small{display:block;font-size:9px;color:#74807b;letter-spacing:.05em;margin-top:4px}.primary-nav{display:flex;align-items:center;gap:38px;font-size:12px;font-weight:600;color:#4d5954}.primary-nav a:hover{color:var(--pine)}.primary-nav .nav-cta{padding:13px 18px;border-radius:8px;background:var(--pine);color:#fff}.nav-cta span{color:var(--lime);margin-left:13px}.hero{min-height:514px;background:var(--pine);color:#fff;padding:72px max(calc((100% - 1200px)/2),5.5%) 0;position:relative;overflow:hidden;display:grid;grid-template-columns:1.08fr .92fr;align-items:center}.hero:before{content:&quot;&quot;;position:absolute;width:520px;height:520px;border:1px solid rgba(221,241,189,.08);border-radius:50%;right:13%;top:-200px}.hero-copy{max-width:560px;position:relative;z-index:1;padding-bottom:50px}.eyebrow{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#aac7a9;margin:0 0 20px}.live-dot{display:inline-block;width:7px;height:7px;background:var(--lime);border-radius:50%;margin-right:7px;box-shadow:0 0 0 4px rgba(216,239,157,.12)}h1,h2,h3,p{margin-top:0}.hero h1{font:600 clamp(40px,5.2vw,64px)/1.06 Manrope,sans-serif;letter-spacing:-3.3px;max-width:570px;margin:0 0 20px}.hero h1 em{font-style:normal;color:var(--lime)}.hero-intro{font-size:14px;line-height:1.8;color:#d1ded7;max-width:470px;margin-bottom:27px}.button{display:inline-flex;align-items:center;justify-content:center;gap:26px;border:0;border-radius:7px;padding:14px 18px;font-size:12px;font-weight:700;transition:transform .18s,background .18s}.button:hover{transform:translateY(-2px)}.button-light{background:var(--lime);color:var(--pine-dark)}.hero-note{display:flex;align-items:flex-start;gap:9px;max-width:400px;margin-top:24px;color:#adbfba;font-size:10px;line-height:1.6}.note-icon{color:var(--lime);font-size:17px}.hero-art{height:340px;position:relative;display:grid;place-items:center}.orbit{position:absolute;border:1px solid rgba(217,238,201,.14);border-radius:50%;transform:rotate(-28deg)}.orbit-one{width:360px;height:230px}.orbit-two{width:440px;height:285px}.art-card{position:absolute;z-index:1;box-shadow:0 22px 45px rgba(5,24,18,.22)}.card-main{width:220px;height:180px;background:#edf3df;border-radius:14px;color:var(--pine);padding:25px;right:18%;top:52px;transform:rotate(5deg);display:flex;flex-direction:column;justify-content:flex-end}.card-main:before{content:&quot;&quot;;position:absolute;top:18px;left:18px;width:74px;height:74px;border-radius:50%;background:#d6e7bd}.art-symbol{position:absolute;top:25px;right:29px;font:500 26px Manrope;color:#52765b}.art-label{font-size:10px;color:#718076}.card-main strong{font:700 21px Manrope;letter-spacing:-.8px;margin-top:5px}.card-small{width:175px;border-radius:10px;background:#fff;color:var(--ink);padding:14px;left:6%;bottom:55px;display:grid;grid-template-columns:13px 1fr;align-items:center;font-size:9px}.card-small b{grid-column:2;font-size:10px;margin-top:5px}.status-dot{width:8px;height:8px;border-radius:50%;background:#95bf6a;grid-row:span 2}.art-spark{position:absolute;color:var(--lime);font-size:31px;right:9%;bottom:44px}.art-line{position:absolute;width:1px;height:90px;background:rgba(221,241,189,.32);transform:rotate(38deg);right:21%;bottom:45px}.hero-bottom{grid-column:1/-1;display:flex;justify-content:space-between;padding:18px 0 17px;border-top:1px solid rgba(255,255,255,.16);font-size:8px;letter-spacing:.14em;color:#abc0b7}.hero-bottom i{font-style:normal;color:var(--lime);padding:0 6px}.trust-strip{max-width:1200px;margin:0 auto;padding:24px 0;display:flex;align-items:center;justify-content:space-between;gap:18px}.trust-strip&gt;div{display:flex;align-items:center;gap:11px}.trust-strip strong,.trust-strip small{display:block}.trust-strip strong{font-size:10px}.trust-strip small{font-size:9px;color:#79827f;margin-top:4px}.strip-icon{width:32px;height:32px;border:1px solid #dfe6dd;background:#fff;border-radius:10px;display:grid;place-items:center;color:var(--pine);font-size:17px}.demo-pill{background:#e9eee5;color:#60725e;padding:8px 10px;border-radius:4px;font-size:8px;letter-spacing:.1em;font-weight:700}.work-area{background:#fff;padding:73px max(calc((100% - 1200px)/2),5.5%) 82px}.section-heading,.issues-heading{display:flex;justify-content:space-between;align-items:end;gap:40px}.eyebrow-dark{color:#77936d;margin-bottom:12px}.section-heading h2,.report-intro h2,.issues-heading h2{font:700 clamp(29px,3.3vw,40px)/1.15 Manrope,sans-serif;letter-spacing:-1.8px;margin-bottom:0}.section-heading&gt;p{max-width:350px;color:var(--muted);font-size:12px;line-height:1.7;margin-bottom:3px}.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}.step-card{padding:24px;border:1px solid var(--line);border-radius:12px;position:relative;min-height:185px}.step-number{position:absolute;right:20px;top:20px;font-size:9px;letter-spacing:.1em;color:#8f9b95}.step-icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:19px;margin-bottom:19px}.icon-report{background:#f6eddc;color:#b77b2e}.icon-route{background:#e6f1e1;color:#577a47}.icon-update{background:#e8edf6;color:#5a6a9a}.step-card h3{font:700 14px Manrope;margin:0 0 9px}.step-card p{font-size:10px;line-height:1.7;color:var(--muted);max-width:260px;margin-bottom:0}.report-section{background:#edf1e9;display:grid;grid-template-columns:.82fr 1.18fr;gap:80px;padding:88px max(calc((100% - 1200px)/2),5.5%)}.report-intro{padding-top:15px}.report-intro h2{max-width:350px;margin-bottom:17px}.report-intro&gt;p:not(.eyebrow){font-size:12px;color:var(--muted);line-height:1.8;max-width:370px}.privacy-card{display:flex;gap:13px;padding:15px;background:#fff;border:1px solid #e2e8df;border-radius:10px;margin-top:28px;max-width:390px}.privacy-card&gt;span{font-size:20px;color:#68825a}.privacy-card strong{font-size:10px}.privacy-card p{font-size:9px;line-height:1.6;color:#768079;margin:5px 0 0}.scope-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:23px;max-width:370px}.scope-list span{font-size:8px;border:1px solid #d6dfd3;border-radius:20px;padding:7px 10px;color:#637364}.report-form{background:#fff;border-radius:14px;padding:27px 30px;box-shadow:var(--shadow)}.form-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:23px}.form-step{font-size:8px;font-weight:700;letter-spacing:.14em;color:#86928c}.form-step span{color:#b6c2b2;margin:0 5px}.form-head h3{font:700 20px Manrope;letter-spacing:-.6px;margin:7px 0 0}.lock-mark{color:#789177;border:1px solid #e2e9e1;width:31px;height:31px;border-radius:9px;display:grid;place-items:center}.field{display:block;font-size:10px;font-weight:700;color:#36433d;margin-bottom:15px}.field input,.field select,.field textarea{display:block;width:100%;border:1px solid #dfe5de;border-radius:6px;background:#fff;color:#26312c;padding:11px 12px;margin-top:7px;font-size:10px;font-weight:400}.field select:invalid,.field input::placeholder,.field textarea::placeholder{color:#9ca59f}.field select{appearance:auto}.field textarea{resize:vertical;line-height:1.55}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field-hint{display:block;color:#8b9690;font-size:8px;font-weight:400;margin:5px 0 0}.urgency-field{border:0;padding:0;margin:1px 0 17px}.urgency-field legend{font-size:10px;font-weight:700;margin-bottom:9px}.urgency-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.urgency-options label{position:relative}.urgency-options input{position:absolute;opacity:0}.urgency-options span{display:block;border:1px solid #e1e7df;border-radius:6px;padding:8px 10px}.urgency-options input:checked+span{border-color:#89a874;background:#f4f8ef}.urgency-options input:focus-visible+span{outline:2px solid #a5cf66}.urgency-options b,.urgency-options small{display:block}.urgency-options b{font-size:9px}.urgency-options small{font-size:8px;color:#838e87;margin-top:3px}.check-row{display:flex;gap:10px;align-items:start;padding:12px 0;border-top:1px solid #edf0ec;cursor:pointer}.check-row input{accent-color:var(--pine);margin:2px 0 0}.check-row strong,.check-row small{display:block}.check-row strong{font-size:9px}.check-row small{font-size:8px;color:#838e87;margin-top:4px;line-height:1.45}.contact-field[hidden]{display:none}.submit-button{width:100%;margin-top:5px}.button-dark{background:var(--pine);color:#fff}.button-dark span{color:var(--lime)}.form-feedback{min-height:15px;margin:9px 0 0;font-size:9px;color:#406842}.issues-section{padding:80px max(calc((100% - 1200px)/2),5.5%) 86px;background:var(--paper)}.issues-heading{align-items:end}.issues-heading&gt;div:first-child&gt;p:not(.eyebrow){font-size:10px;color:var(--muted);margin:10px 0 0;max-width:470px;line-height:1.6}.issue-filters{display:flex;border:1px solid #e0e6dd;background:#fff;border-radius:7px;padding:4px;gap:2px}.filter-button{border:0;background:transparent;padding:8px 10px;border-radius:5px;color:#66716a;font-size:8px;font-weight:600}.filter-button span{color:#9ca79f;margin-left:4px}.filter-button.active{background:var(--pine);color:#fff}.filter-button.active span{color:var(--lime)}.demo-alert{display:flex;align-items:center;gap:10px;background:#fff8e9;border:1px solid #f2e6c7;border-radius:7px;padding:10px 13px;margin:23px 0 13px}.demo-alert&gt;span{width:17px;height:17px;border-radius:50%;background:#f2e1b7;color:#826627;display:grid;place-items:center;font:bold 10px Georgia}.demo-alert p{font-size:9px;color:#76694a;margin:0}.demo-alert strong{color:#544a34}.issue-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.issue-card{background:#fff;border:1px solid var(--line);border-radius:9px;padding:17px;display:grid;grid-template-columns:1fr auto;gap:10px}.issue-meta{display:flex;align-items:center;gap:7px;font-size:8px;color:#89948d}.issue-category{padding:5px 7px;background:#eef3e9;border-radius:3px;color:#56734e;font-weight:700}.issue-card h3{font:700 13px Manrope;margin:11px 0 5px}.issue-card p{font-size:9px;color:#717c75;line-height:1.6;margin:0;max-width:420px}.issue-status{align-self:start;font-size:8px;padding:6px 8px;border-radius:12px;background:#f7eddb;color:#9b6d29;white-space:nowrap}.issue-status.resolved{background:#e7f1e5;color:#527c51}.issue-foot{grid-column:1/-1;border-top:1px solid #eef1ec;padding-top:10px;display:flex;justify-content:space-between;font-size:8px;color:#89948d}.issue-empty{grid-column:1/-1;text-align:center;background:#fff;border-radius:8px;padding:25px;color:#78837c;font-size:11px}.closing-cta{background:var(--pine);color:#fff;padding:45px max(calc((100% - 1200px)/2),5.5%);display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden}.closing-cta .eyebrow{margin-bottom:9px}.closing-cta h2{font:700 26px Manrope;letter-spacing:-1px;margin:0}.closing-mark{position:absolute;right:28%;top:-70px;font:800 240px Manrope;color:rgba(255,255,255,.045)}.closing-cta .button{position:relative;z-index:1}.site-footer{max-width:1200px;padding:24px 0;margin:0 auto;display:flex;align-items:center;justify-content:space-between}.site-footer p,.site-footer&gt;a:last-child{font-size:8px;color:#7b8580;margin:0}.site-footer&gt;a:last-child span{color:var(--pine);margin-left:5px}.footer-brand .brand-mark{width:30px;height:30px;border-radius:9px;font-size:20px}.footer-brand strong{font-size:19px}.footer-brand small{font-size:8px}
+
+@media(max-width:900px){.trust-strip,.site-footer{margin-left:5.5%;margin-right:5.5%}.report-section{gap:35px}.hero{grid-template-columns:1fr .75fr}.hero-art{transform:scale(.88);transform-origin:center}.primary-nav{gap:20px}}
+@media(max-width:650px){.site-header{height:72px;padding:0 5%}.primary-nav&gt;a:not(.nav-cta){display:none}.primary-nav .nav-cta{padding:11px 12px;font-size:10px}.hero{display:block;padding:58px 6% 0;min-height:auto}.hero-copy{padding-bottom:15px}.hero h1{font-size:45px;letter-spacing:-2.5px}.hero-intro{font-size:12px}.hero-art{height:240px;transform:scale(.8);margin-top:-4px}.card-main{right:16%;top:25px}.card-small{left:4%;bottom:18px}.hero-bottom{font-size:7px;gap:12px}.hero-bottom span:last-child{text-align:right}.trust-strip{padding:20px 0;display:grid;grid-template-columns:1fr 1fr}.trust-strip&gt;div{gap:8px}.trust-strip small{font-size:8px}.demo-pill{justify-self:start}.work-area,.issues-section{padding:58px 6%}.section-heading,.issues-heading{display:block}.section-heading&gt;p{margin-top:13px}.steps-grid{grid-template-columns:1fr;gap:9px;margin-top:23px}.step-card{min-height:auto;padding:18px}.step-icon{margin-bottom:13px}.report-section{display:block;padding:57px 6%}.report-intro{padding:0;margin-bottom:25px}.report-intro h2{font-size:34px}.report-form{padding:21px 18px}.field-row{grid-template-columns:1fr;gap:0}.issue-filters{margin-top:20px;display:inline-flex}.issue-list{grid-template-columns:1fr}.closing-cta{padding:35px 6%;gap:18px;align-items:start;flex-direction:column}.closing-cta h2{font-size:23px}.closing-mark{right:9%;top:-46px;font-size:180px}.site-footer{margin:0;padding:22px 6%;align-items:flex-start;gap:12px;flex-wrap:wrap}.site-footer p{order:3;width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+========================================================================================
+FILE: app/app.js
+========================================================================================
+(() =&gt; {
+  const STORAGE_KEY = &#x27;iro-demo-reports-v1&#x27;;
+  const sampleReports = [
+    {id:&#x27;IRO-024&#x27;,category:&#x27;Sanitation&#x27;,area:&#x27;Akungba-Akoko&#x27;,title:&#x27;Waste collection delay near campus&#x27;,description:&#x27;Several shared collection points appear full. A clear collection update would help residents plan.&#x27;,status:&#x27;In progress&#x27;,date:&#x27;18 Oct 2026&#x27;,urgency:&#x27;Soon&#x27;,sample:true},
+    {id:&#x27;IRO-023&#x27;,category:&#x27;Roads &amp; transport&#x27;,area:&#x27;Iwaro&#x27;,title:&#x27;Road surface needs attention&#x27;,description:&#x27;A section of the route is difficult to use after rainfall. Please review drainage and repairs.&#x27;,status:&#x27;Received&#x27;,date:&#x27;16 Oct 2026&#x27;,urgency:&#x27;Routine&#x27;,sample:true},
+    {id:&#x27;IRO-021&#x27;,category:&#x27;Water &amp; electricity&#x27;,area:&#x27;AAUA campus&#x27;,title:&#x27;Intermittent water supply&#x27;,description:&#x27;Some shared facilities have had irregular water access. A service notice would be useful.&#x27;,status:&#x27;In progress&#x27;,date:&#x27;13 Oct 2026&#x27;,urgency:&#x27;Soon&#x27;,sample:true},
+    {id:&#x27;IRO-018&#x27;,category:&#x27;Facilities&#x27;,area:&#x27;Etioro&#x27;,title:&#x27;Street lighting repair completed&#x27;,description:&#x27;A lighting fault was checked and the example report is marked resolved.&#x27;,status:&#x27;Resolved&#x27;,date:&#x27;08 Oct 2026&#x27;,urgency:&#x27;Routine&#x27;,sample:true}
+  ];
+  const issueList = document.getElementById(&#x27;issueList&#x27;);
+  const form = document.getElementById(&#x27;issueForm&#x27;);
+  const feedback = document.getElementById(&#x27;formFeedback&#x27;);
+  let activeFilter = &#x27;all&#x27;;
+
+  const escapeHTML = (value) =&gt; String(value).replace(/[&amp;&lt;&gt;&quot;&#x27;]/g, (character) =&gt; ({&#x27;&amp;&#x27;:&#x27;&amp;amp;&#x27;,&#x27;&lt;&#x27;:&#x27;&amp;lt;&#x27;,&#x27;&gt;&#x27;:&#x27;&amp;gt;&#x27;,&#x27;&quot;&#x27;:&#x27;&amp;quot;&#x27;,&quot;&#x27;&quot;:&#x27;&amp;#39;&#x27;}[character]));
+  const getReports = () =&gt; {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      return Array.isArray(saved) ? [...saved, ...sampleReports] : sampleReports;
+    } catch (_) { return sampleReports; }
+  };
+  const setReports = (reports) =&gt; {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(reports.filter((report) =&gt; !report.sample))); }
+    catch (_) { feedback.textContent = &#x27;This browser could not save the demo entry. You can still review the example board.&#x27;; }
+  };
+
+  function renderReports() {
+    const reports = getReports();
+    const openCount = reports.filter((item) =&gt; item.status !== &#x27;Resolved&#x27;).length;
+    const resolvedCount = reports.length - openCount;
+    document.getElementById(&#x27;countAll&#x27;).textContent = reports.length;
+    document.getElementById(&#x27;countOpen&#x27;).textContent = openCount;
+    document.getElementById(&#x27;countResolved&#x27;).textContent = resolvedCount;
+    const visible = reports.filter((item) =&gt; activeFilter === &#x27;all&#x27; || (activeFilter === &#x27;resolved&#x27; ? item.status === &#x27;Resolved&#x27; : item.status !== &#x27;Resolved&#x27;));
+    issueList.innerHTML = visible.length ? visible.map((item) =&gt; `
+      &lt;article class=&quot;issue-card&quot;&gt;
+        &lt;div&gt;&lt;div class=&quot;issue-meta&quot;&gt;&lt;span class=&quot;issue-category&quot;&gt;${escapeHTML(item.category)}&lt;/span&gt;&lt;span&gt;·&lt;/span&gt;&lt;span&gt;${escapeHTML(item.area)}&lt;/span&gt;&lt;/div&gt;
+          &lt;h3&gt;${escapeHTML(item.title)}&lt;/h3&gt;&lt;p&gt;${escapeHTML(item.description)}&lt;/p&gt;&lt;/div&gt;
+        &lt;span class=&quot;issue-status ${item.status === &#x27;Resolved&#x27; ? &#x27;resolved&#x27; : &#x27;&#x27;}&quot;&gt;${escapeHTML(item.status)}&lt;/span&gt;
+        &lt;div class=&quot;issue-foot&quot;&gt;&lt;span&gt;${escapeHTML(item.id)} ${item.sample ? &#x27;· sample&#x27; : &#x27;· local demo&#x27;}&lt;/span&gt;&lt;span&gt;${escapeHTML(item.date)}&lt;/span&gt;&lt;/div&gt;
+      &lt;/article&gt;`).join(&#x27;&#x27;) : &#x27;&lt;p class=&quot;issue-empty&quot;&gt;No reports match this filter yet.&lt;/p&gt;&#x27;;
+  }
+
+  document.querySelectorAll(&#x27;[data-filter]&#x27;).forEach((button) =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+    activeFilter = button.dataset.filter;
+    document.querySelectorAll(&#x27;[data-filter]&#x27;).forEach((item) =&gt; item.classList.toggle(&#x27;active&#x27;, item === button));
+    renderReports();
+  }));
+
+  document.getElementById(&#x27;anonymous&#x27;).addEventListener(&#x27;change&#x27;, (event) =&gt; {
+    document.getElementById(&#x27;contactWrap&#x27;).hidden = event.target.checked;
+  });
+
+  form.addEventListener(&#x27;submit&#x27;, (event) =&gt; {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    const values = new FormData(form);
+    const reports = getReports().filter((report) =&gt; !report.sample);
+    const nextNumber = String(25 + reports.length).padStart(3, &#x27;0&#x27;);
+    reports.unshift({
+      id:`IRO-${nextNumber}`,
+      category:values.get(&#x27;category&#x27;),
+      area:values.get(&#x27;area&#x27;),
+      title:values.get(&#x27;title&#x27;),
+      description:values.get(&#x27;description&#x27;),
+      status:&#x27;Received&#x27;,
+      date:new Intl.DateTimeFormat(&#x27;en-GB&#x27;,{day:&#x27;2-digit&#x27;,month:&#x27;short&#x27;,year:&#x27;numeric&#x27;}).format(new Date()),
+      urgency:values.get(&#x27;urgency&#x27;),
+      reporterGroup:values.get(&#x27;reporterGroup&#x27;),
+      anonymous:document.getElementById(&#x27;anonymous&#x27;).checked
+    });
+    setReports(reports);
+    feedback.textContent = `Saved locally as ${reports[0].id}. This entry has not been sent to anyone.`;
+    form.reset();
+    document.getElementById(&#x27;contactWrap&#x27;).hidden = true;
+    activeFilter = &#x27;all&#x27;;
+    document.querySelectorAll(&#x27;[data-filter]&#x27;).forEach((item) =&gt; item.classList.toggle(&#x27;active&#x27;, item.dataset.filter === &#x27;all&#x27;));
+    renderReports();
+    document.getElementById(&#x27;reports&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});
+  });
+
+  renderReports();
+})();
+
+========================================================================================
+FILE: google-forms/CreateIROForm.gs
+========================================================================================
+/**
+ * Creates the IRO anonymous needs-assessment questionnaire in the signed-in
+ * Google account. Run createIROSurvey once, then copy the URLs from the log.
+ * The script creates the form only; it does not submit or invent responses.
+ */
+function createIROSurvey() {
+  const form = FormApp.create(&#x27;IRO (Issues Reporting Outlet) — Community Needs Survey&#x27;, false);
+  form
+    .setDescription(
+      &#x27;This short questionnaire gathers views from AAUA students and residents of Akungba, Iwaro, Etioro, Ayegunle, and nearby communities. It informs a CSC426 coursework prototype. Participation is voluntary. Do not include names, phone numbers, exact addresses, health details, allegations about named people, or other identifying information. The form does not collect email addresses. Responses are for coursework analysis and are not an emergency or complaint-handling service.&#x27;
+    )
+    .setCollectEmail(false)
+    .setAllowResponseEdits(false)
+    .setProgressBar(true)
+    .setConfirmationMessage(&#x27;Thank you. Your anonymous feedback has been recorded for the IRO coursework needs assessment.&#x27;);
+
+  addChoice(form, &#x27;Consent&#x27;, &#x27;I understand the purpose above and choose to provide anonymous feedback.&#x27;, [
+    &#x27;Yes, I consent to take part&#x27;,
+    &#x27;No, I do not consent&#x27;
+  ], true);
+
+  addChoice(form, &#x27;Respondent group&#x27;, &#x27;Which group best describes you?&#x27;, [
+    &#x27;AAUA student&#x27;, &#x27;Akungba indigene/resident&#x27;, &#x27;Iwaro indigene/resident&#x27;,
+    &#x27;Etioro indigene/resident&#x27;, &#x27;Ayegunle indigene/resident&#x27;, &#x27;Other nearby community member&#x27;, &#x27;Prefer not to say&#x27;
+  ], true, true);
+
+  addChoice(form, &#x27;Main area&#x27;, &#x27;Which broad area are you answering about?&#x27;, [
+    &#x27;AAUA campus&#x27;, &#x27;Akungba-Akoko&#x27;, &#x27;Iwaro&#x27;, &#x27;Etioro&#x27;, &#x27;Ayegunle&#x27;, &#x27;Other nearby area&#x27;, &#x27;Prefer not to say&#x27;
+  ], true, true);
+
+  addChoice(form, &#x27;Recent issues&#x27;, &#x27;In the past six months, have you experienced or witnessed an unresolved community or campus issue?&#x27;, [
+    &#x27;Yes&#x27;, &#x27;No&#x27;, &#x27;Not sure&#x27;, &#x27;Prefer not to say&#x27;
+  ], true);
+
+  addChecks(form, &#x27;Issue types&#x27;, &#x27;Which issues have you experienced or witnessed? Select all that apply.&#x27;, [
+    &#x27;Roads and transport&#x27;, &#x27;Water and electricity&#x27;, &#x27;Sanitation and waste&#x27;,
+    &#x27;Safety and security&#x27;, &#x27;Facilities and maintenance&#x27;, &#x27;Student services&#x27;,
+    &#x27;Communication or delayed updates&#x27;, &#x27;Other&#x27;, &#x27;Prefer not to say&#x27;
+  ], false);
+
+  addChoice(form, &#x27;Issue frequency&#x27;, &#x27;How often do issues that need attention affect your area?&#x27;, [
+    &#x27;Weekly or more often&#x27;, &#x27;About monthly&#x27;, &#x27;A few times a year&#x27;, &#x27;Rarely&#x27;, &#x27;Not sure&#x27;, &#x27;Prefer not to say&#x27;
+  ], true);
+
+  addChecks(form, &#x27;Reporting barriers&#x27;, &#x27;What makes it difficult to report an issue or get follow-up? Select all that apply.&#x27;, [
+    &#x27;I do not know the right contact or channel&#x27;, &#x27;I am concerned about privacy&#x27;,
+    &#x27;I am concerned about retaliation&#x27;, &#x27;I expect no response or update&#x27;,
+    &#x27;The process takes too much time&#x27;, &#x27;I do not have reliable internet/access&#x27;,
+    &#x27;I have not had a reason to report&#x27;, &#x27;Other&#x27;, &#x27;Prefer not to say&#x27;
+  ], false);
+
+  addChoice(form, &#x27;Current reporting channel&#x27;, &#x27;How would you most likely raise an issue today?&#x27;, [
+    &#x27;Tell a representative or community leader&#x27;, &#x27;Contact a university/community office&#x27;,
+    &#x27;Use a phone call or message&#x27;, &#x27;Post in a group or on social media&#x27;,
+    &#x27;I would not report it&#x27;, &#x27;Other&#x27;, &#x27;Prefer not to say&#x27;
+  ], true, true);
+
+  addChoice(form, &#x27;Privacy confidence&#x27;, &#x27;How confident would you feel using a reporting service that does not require your name?&#x27;, [
+    &#x27;Very confident&#x27;, &#x27;Somewhat confident&#x27;, &#x27;Neither confident nor concerned&#x27;,
+    &#x27;Somewhat concerned&#x27;, &#x27;Very concerned&#x27;, &#x27;Not sure&#x27;
+  ], true);
+
+  addChoice(form, &#x27;Status updates&#x27;, &#x27;Which follow-up would be most useful?&#x27;, [
+    &#x27;A reference number and status page&#x27;, &#x27;A message when the status changes&#x27;,
+    &#x27;A public summary with no reporter details&#x27;, &#x27;A direct response from a coordinator&#x27;,
+    &#x27;No follow-up needed&#x27;, &#x27;Other&#x27;
+  ], true, true);
+
+  addChoice(form, &#x27;First update expectation&#x27;, &#x27;How soon should a coordinator acknowledge a non-emergency report?&#x27;, [
+    &#x27;Within one working day&#x27;, &#x27;Within three working days&#x27;, &#x27;Within one week&#x27;,
+    &#x27;Within two weeks&#x27;, &#x27;I am not sure&#x27;
+  ], true);
+
+  addChecks(form, &#x27;Helpful features&#x27;, &#x27;Which features would make the service useful to you? Select all that apply.&#x27;, [
+    &#x27;Anonymous reporting&#x27;, &#x27;Clear issue categories&#x27;, &#x27;A safe way to identify a broad location&#x27;,
+    &#x27;A reference number&#x27;, &#x27;Progress/status updates&#x27;, &#x27;A way to correct or add context&#x27;,
+    &#x27;A contact point for urgent safety matters&#x27;, &#x27;Other&#x27;
+  ], false);
+
+  form.addParagraphTextItem()
+    .setTitle(&#x27;Anything else?&#x27;)
+    .setHelpText(&#x27;Optional. Suggest improvements without naming people or including private or identifying details.&#x27;)
+    .setRequired(false);
+
+  form.setPublished(true);
+  Logger.log(&#x27;Responder URL: &#x27; + form.getPublishedUrl());
+  Logger.log(&#x27;Editor URL: &#x27; + form.getEditUrl());
+}
+
+function addChoice(form, title, question, options, required, other) {
+  const item = form.addMultipleChoiceItem().setTitle(question).setChoiceValues(options).setRequired(required);
+  if (other) item.showOtherOption(true);
+  item.setHelpText(title);
+  return item;
+}
+
+function addChecks(form, title, question, options, required) {
+  return form.addCheckboxItem()
+    .setTitle(question)
+    .setHelpText(title)
+    .setChoiceValues(options)
+    .setRequired(required);
+}
+</code></pre></section>
+</body></html>

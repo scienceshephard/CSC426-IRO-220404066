@@ -1,0 +1,21 @@
+<mxfile host="app.diagrams.net" modified="2026-10-19T00:00:00.000Z" agent="IRO coursework" version="24.7.17" type="device">
+  <diagram id="usecase-admin" name="Administration">
+    <mxGraphModel dx="980" dy="610" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="610" math="0" shadow="0">
+      <root><mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="boundary" value="IRO ADMINISTRATION" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9eb4a2;strokeWidth=2;dashed=1;dashPattern=8 5;verticalAlign=top;align=left;spacingLeft=14;spacingTop=10;fontColor=#45644d;fontStyle=1;fontSize=13;" vertex="1" parent="1"><mxGeometry x="230" y="75" width="700" height="440" as="geometry"/></mxCell>
+        <mxCell id="admin" value="System Administrator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#153b35;fontColor=#153b35;fontSize=12;" vertex="1" parent="1"><mxGeometry x="65" y="235" width="90" height="120" as="geometry"/></mxCell>
+        <mxCell id="coordinator" value="IRO Coordinator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#153b35;fontColor=#153b35;fontSize=12;" vertex="1" parent="1"><mxGeometry x="65" y="400" width="90" height="120" as="geometry"/></mxCell>
+        <mxCell id="uc_roles" value="Manage coordinator roles" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e8f1e7;strokeColor=#7f9d7a;fontColor=#1f392d;fontSize=13;" vertex="1" parent="1"><mxGeometry x="340" y="150" width="220" height="65" as="geometry"/></mxCell>
+        <mxCell id="uc_categories" value="Manage issue categories" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e8f1e7;strokeColor=#7f9d7a;fontColor=#1f392d;fontSize=13;" vertex="1" parent="1"><mxGeometry x="640" y="150" width="220" height="65" as="geometry"/></mxCell>
+        <mxCell id="uc_areas" value="Manage community areas" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e8f1e7;strokeColor=#7f9d7a;fontColor=#1f392d;fontSize=13;" vertex="1" parent="1"><mxGeometry x="340" y="300" width="220" height="65" as="geometry"/></mxCell>
+        <mxCell id="uc_audit" value="Review access/audit history" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f0df;strokeColor=#c8ab69;fontColor=#463b20;fontSize=13;" vertex="1" parent="1"><mxGeometry x="640" y="300" width="220" height="65" as="geometry"/></mxCell>
+        <mxCell id="a1" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="admin" target="uc_roles"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a2" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="admin" target="uc_categories"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a3" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="admin" target="uc_areas"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a4" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="admin" target="uc_audit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a5" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;dashed=1;dashPattern=5 4;" edge="1" parent="1" source="coordinator" target="uc_audit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="note" value="All administrative actions require authenticated, role-checked access in a production deployment. This prototype does not implement admin functions." style="shape=note;whiteSpace=wrap;html=1;size=18;fillColor=#fff7e5;strokeColor=#ddc98d;fontColor=#625537;fontSize=11;" vertex="1" parent="1"><mxGeometry x="250" y="550" width="650" height="45" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

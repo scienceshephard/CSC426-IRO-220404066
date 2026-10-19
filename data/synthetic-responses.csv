@@ -1,0 +1,16 @@
+response_id,respondent_group,broad_area,issue_types,frequency,reporting_barriers,preferred_first_update,sample_status
+SYN-01,AAUA student,AAUA campus,"Sanitation;Safety;Facilities",Weekly,"Do not know contact;Expect no follow-up",Within three working days,Simulated
+SYN-02,AAUA student,Akungba-Akoko,"Sanitation;Roads;Utilities;Communication",Weekly,"Privacy concern;Do not know contact",Within one week,Simulated
+SYN-03,AAUA student,AAUA campus,"Sanitation;Safety;Transport",Monthly,"Expect no follow-up;Process takes time",Within three working days,Simulated
+SYN-04,AAUA student,Akungba-Akoko,"Sanitation;Roads;Facilities",Weekly,"Do not know contact;Privacy concern",Within one week,Simulated
+SYN-05,AAUA student,AAUA campus,"Sanitation;Safety;Utilities",Monthly,"Privacy concern;Expect no follow-up",Within one working day,Simulated
+SYN-06,AAUA student,Iwaro,"Sanitation;Roads;Transport",Weekly,"Do not know contact;Process takes time",Within one week,Simulated
+SYN-07,AAUA student,AAUA campus,"Sanitation;Utilities;Communication",Monthly,"Expect no follow-up;Unreliable internet",Within three working days,Simulated
+SYN-08,AAUA student,Akungba-Akoko,"Sanitation;Roads;Facilities",Weekly,"Do not know contact;Privacy concern",Within one week,Simulated
+SYN-09,AAUA student,AAUA campus,"Sanitation;Safety;Communication",Monthly,"Expect no follow-up;Privacy concern",Within three working days,Simulated
+SYN-10,Akungba indigene/resident,Akungba-Akoko,"Roads;Safety;Sanitation",Weekly,"Do not know contact;Retaliation concern",Within one week,Simulated
+SYN-11,Akungba indigene/resident,Akungba-Akoko,"Roads;Utilities;Transport",Monthly,"Do not know contact;Process takes time",Within two weeks,Simulated
+SYN-12,Akungba indigene/resident,Akungba-Akoko,"Safety;Facilities",Monthly,"Privacy concern;Retaliation concern",Within one week,Simulated
+SYN-13,Iwaro indigene/resident,Iwaro,"Roads;Utilities",Rarely,"Have not needed to report",Within two weeks,Simulated
+SYN-14,Etioro indigene/resident,Etioro,"Safety;Utilities;Communication",Rarely,"Do not know contact",Within three working days,Simulated
+SYN-15,Ayegunle indigene/resident,Ayegunle,"Roads;Facilities;Transport",Rarely,"Expect no follow-up;Process takes time",Within one week,Simulated

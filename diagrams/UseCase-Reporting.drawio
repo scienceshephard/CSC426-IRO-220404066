@@ -1,0 +1,28 @@
+<mxfile host="app.diagrams.net" modified="2026-10-19T00:00:00.000Z" agent="IRO coursework" version="24.7.17" type="device">
+  <diagram id="usecase-reporting" name="Reporting and case management">
+    <mxGraphModel dx="1060" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1080" pageHeight="700" math="0" shadow="0">
+      <root><mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="boundary" value="IRO WEB APPLICATION" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9eb4a2;strokeWidth=2;dashed=1;dashPattern=8 5;verticalAlign=top;align=left;spacingLeft=14;spacingTop=10;fontColor=#45644d;fontStyle=1;fontSize=13;" vertex="1" parent="1"><mxGeometry x="230" y="65" width="800" height="590" as="geometry"/></mxCell>
+        <mxCell id="reporter" value="Reporter&lt;br&gt;(student / resident)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#153b35;fontColor=#153b35;fontSize=12;" vertex="1" parent="1"><mxGeometry x="65" y="210" width="90" height="120" as="geometry"/></mxCell>
+        <mxCell id="coordinator" value="IRO Coordinator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#153b35;fontColor=#153b35;fontSize=12;" vertex="1" parent="1"><mxGeometry x="65" y="455" width="90" height="120" as="geometry"/></mxCell>
+        <mxCell id="uc_submit" value="Submit issue report" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e8f1e7;strokeColor=#7f9d7a;fontColor=#1f392d;fontSize=13;" vertex="1" parent="1"><mxGeometry x="330" y="140" width="205" height="62" as="geometry"/></mxCell>
+        <mxCell id="uc_privacy" value="Choose privacy &amp; broad area" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e8f1e7;strokeColor=#7f9d7a;fontColor=#1f392d;fontSize=13;" vertex="1" parent="1"><mxGeometry x="630" y="140" width="225" height="62" as="geometry"/></mxCell>
+        <mxCell id="uc_track" value="Track own report status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e8f1e7;strokeColor=#7f9d7a;fontColor=#1f392d;fontSize=13;" vertex="1" parent="1"><mxGeometry x="330" y="255" width="205" height="62" as="geometry"/></mxCell>
+        <mxCell id="uc_public" value="View public issue updates" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e8f1e7;strokeColor=#7f9d7a;fontColor=#1f392d;fontSize=13;" vertex="1" parent="1"><mxGeometry x="630" y="255" width="225" height="62" as="geometry"/></mxCell>
+        <mxCell id="uc_review" value="Review and triage report" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f0df;strokeColor=#c8ab69;fontColor=#463b20;fontSize=13;" vertex="1" parent="1"><mxGeometry x="330" y="375" width="205" height="62" as="geometry"/></mxCell>
+        <mxCell id="uc_route" value="Categorize and route case" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f0df;strokeColor=#c8ab69;fontColor=#463b20;fontSize=13;" vertex="1" parent="1"><mxGeometry x="630" y="375" width="225" height="62" as="geometry"/></mxCell>
+        <mxCell id="uc_update" value="Publish safe status update" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f0df;strokeColor=#c8ab69;fontColor=#463b20;fontSize=13;" vertex="1" parent="1"><mxGeometry x="330" y="500" width="205" height="62" as="geometry"/></mxCell>
+        <mxCell id="uc_summary" value="View aggregate summary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f0df;strokeColor=#c8ab69;fontColor=#463b20;fontSize=13;" vertex="1" parent="1"><mxGeometry x="630" y="500" width="225" height="62" as="geometry"/></mxCell>
+        <mxCell id="a1" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="reporter" target="uc_submit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a2" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="reporter" target="uc_track"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a3" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="reporter" target="uc_public"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a4" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="coordinator" target="uc_review"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a5" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="coordinator" target="uc_route"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a6" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="coordinator" target="uc_update"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a7" style="edgeStyle=none;html=1;strokeColor=#45594d;endArrow=none;" edge="1" parent="1" source="coordinator" target="uc_summary"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="inc" value="includes" style="dashed=1;dashPattern=6 4;endArrow=open;endFill=0;html=1;fontColor=#718076;fontSize=10;" edge="1" parent="1" source="uc_submit" target="uc_privacy"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="note" value="The diagram shows the proposed operational system. The coursework prototype only implements local report entry and a sample status board." style="shape=note;whiteSpace=wrap;html=1;size=18;fillColor=#fff7e5;strokeColor=#ddc98d;fontColor=#625537;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="665" width="780" height="35" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
